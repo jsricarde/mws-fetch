@@ -1,0 +1,21 @@
+body {
+  background-image: url('stars-bg.jpg');
+  font-family: 'Lato', Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #EBD71C;
+}
+
+button {
+  color: #EBD71C;
+  border: 2px solid #EBD71C;
+  padding: 20px;
+  background: transparent;
+  text-decoration: none;
+  margin: 0 auto;
+  display: block;
+  /* text-align: center; */
+}
+
+.tropper-image{
+  width: 100px;
+}
