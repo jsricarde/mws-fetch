@@ -1,7 +1,6 @@
 /**
- * Json File example
+ * Load Json File example
  */
-
 const loadJson = () => {
   return fetch('movies.json')
     .then((response) => {
@@ -11,10 +10,10 @@ const loadJson = () => {
     .then((res) => {
       const moviesList = document.querySelector('ul');
       for (let i = 0; i < res.movies.length; i++) {
-        console.log(res.movies[ i ])
         const movie = document.createElement('li');
         movie.innerHTML = `<h3>${res.movies[ i ].title}</h3>`;
         movie.innerHTML += `<p> Episode ${res.movies[ i ].episode_number}</p>`;
+        movie.innerHTML += `<p> ${res.movies[ i ].description}</p>`;
         let castList = '<ul>';
         res.movies[ i ].main_characters.forEach((character) => {
           castList += `<li><img src="./falcon.png" class="falcon">${character}</li>`;
@@ -31,17 +30,29 @@ const loadJson = () => {
  */
 // define variables
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-let source = undefined;
+const source = audioCtx.createBufferSource();
+const loadSoundView = () => {
+  const play = document.querySelector('.play');
+  const stop = document.querySelector('.stop');
+  loadMenu();
 
-const play = document.querySelector('.play');
-const stop = document.querySelector('.stop');
+  if (play) {
+    play.onclick = () => {
+      getAudioData();
+      source.start(0);
+      play.setAttribute('disabled', 'disabled');
+    }
+  }
 
-// use fetch to load an audio track, and
-// decodeAudioData to decode it and stick it in a buffer.
-// Then we put the buffer into the source
-const getData = () => {
-  source = audioCtx.createBufferSource();
+  if (stop) {
+    stop.onclick = () => {
+      source.stop(0);
+      play.removeAttribute('disabled');
+    }
+  }
+}
 
+const getAudioData = () => {
   fetch('opening-sound.ogg')
     .then(response => response.arrayBuffer())
     .then(buffer => {
@@ -51,22 +62,6 @@ const getData = () => {
       });
     });
 };
-
-// wire up buttons to stop and play audio
-if (play) {
-  play.onclick = () => {
-    getData();
-    source.start(0);
-    play.setAttribute('disabled', 'disabled');
-  }
-}
-
-if (stop) {
-  stop.onclick = () => {
-    source.stop(0);
-    play.removeAttribute('disabled');
-  }
-}
 
 /**
  * Clone response example (Vader)
@@ -100,19 +95,21 @@ const loadTropper = () => {
     });
 }
 
-
 /**
  * HTML response example (So nice web sample)
  */
 const loadANiceWeb = () => {
   const sectionWeb = document.getElementById('web-section');
   const loadPage = document.getElementById('btn-load-page');
+  loadMenu();
   if (loadPage) {
     loadPage.onclick = () => {
-      getData();
-      source.start(0);
+      getAudioData();
       fetch('./nice-web.html')
-        .then(function (response) { return response.text() })
+        .then(function (response) {
+          source.start(0);
+          return response.text();
+        })
         .then(function (text) {
           sectionWeb.innerHTML = text;
         });
@@ -120,6 +117,9 @@ const loadANiceWeb = () => {
   }
 }
 
+/**
+ * HTML menu response example (So nice web sample)
+ */
 const loadMenu = () => {
   const menu = document.getElementById('menu');
   fetch('./menu.html')
