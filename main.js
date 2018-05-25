@@ -15,7 +15,7 @@ const loadJson = () => {
         movie.innerHTML += `<p> Episode ${res.movies[ i ].episode_number}</p>`;
         let castList = '<ul>';
         res.movies[ i ].main_characters.forEach((character) => {
-          castList += `<li>${character}</li>`;
+          castList += `<li><img src="./falcon.png" class="falcon">${character}</li>`;
         })
         castList += '</ul>'
         movie.innerHTML += ` Cast: ${castList}`;
