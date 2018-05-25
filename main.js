@@ -1,9 +1,11 @@
 /**
  * Json File example
  */
+
 const loadJson = () => {
   return fetch('movies.json')
     .then((response) => {
+      loadMenu();
       return response.json()
     })
     .then((res) => {
@@ -74,7 +76,7 @@ const loadTropper = () => {
   const clone = document.querySelector('.clone');
   const sectionImages = document.getElementById('section-images');
   // let cloneResponse = new Response();
-
+  loadMenu();
   fetch('stormtropper.png')
     .then(function (response) {
       const cloneResponse = response.clone();
@@ -116,4 +118,21 @@ const loadANiceWeb = () => {
         });
     }
   }
+}
+
+const loadMenu = () => {
+  const menu = document.getElementById('menu');
+  fetch('./menu.html')
+    .then(function (response) { return response.text() })
+    .then(function (text) {
+      menu.innerHTML = text;
+      const burger = document.getElementById('burger');
+      const nav = document.getElementById('nav');
+      if (burger) {
+        burger.onclick = () => {
+          burger.classList.toggle('active');
+          nav.classList.toggle('show');
+        }
+      }
+    });
 }

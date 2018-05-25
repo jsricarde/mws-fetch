@@ -1,5 +1,4 @@
 body {
-  margin: 10%;
   background-image: url('stars-bg.jpg');
   font-family: 'Lato', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -22,7 +21,9 @@ button {
   text-align: center;
 }
 
-
+.content {
+  margin: 12%;
+}
 
 #section-images {
   text-align: center;
